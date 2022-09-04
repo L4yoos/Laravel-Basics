@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('notes', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('user_id')->unsigned();
-            $table->string('topic');
-            $table->string('text');
+        Schema::create('shoptools', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('price')->unsigned();
+            $table->string('name');
+            $table->bigInteger('quantity');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notes');
+        Schema::dropIfExists('tools_shop');
     }
 };

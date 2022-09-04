@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\HomeController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,6 +17,4 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-//raz starczy :), samo sie tworzylo ja tego nie pisałem ;pkk

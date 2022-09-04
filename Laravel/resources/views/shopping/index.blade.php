@@ -4,27 +4,34 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.css">
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
-                <form action=" {{ route('panel.user.update', $user) }} " method="POST">@method('put')
-                @csrf
-					<p>Twój stan konta: <input type="text" value="{{ $user->wallet->balance }}" name="balance"></p>
-                    <p>ID: <input type="text" value="{{ $user->id }}" placeholder="ID" disabled></p>
-                    <p>Name: <input type="text" value="{{ $user->name }}" placeholder="Name" name="name"></p>
-                    <p>Password: <input type="text" value="" placeholder="password" name="password"></p>
-                    <p>Password confirmed: <input type="text" value="" placeholder="password_confirmation" name="password_confirmation"></p>
-                    <p>Email: <input type="text" value="" placeholder="Email" name="email"></p>
-                    <p>Email_verified: <input type="text" value="{{ $user->email_verified_at }}" placeholder="Email_ver" disabled></p>
-                    <p>Last_active: <input type="text" value="{{ $user->last_active }}" placeholder="last_active" disabled></p>
-                    <p>Phone: <input type="text" value="{{ $user->phone }}" placeholder="phone" name="phone"></p>
-					<p>Newsletter:  
-						<input type="checkbox" 
-								value="1" 
-								name="consent" 
-								@if($user->newsletter->consent == 1) checked ? 0 @endif
-						></p> 
-                    <button type="submit">Edytuj!</button>
-                </form> 
+                <div class="card-header">{{ __('Shopping') }}</div>
+				<table>
+					<thead>
+						<tr>
+							<th>Cena:</th>
+							<th>Nazwa:</th>
+                            <th>Ilość:</th>
+							<th>Opcje:</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach($shoptools as $shoptool)
+						<tr>
+							<th>{{ $shoptool->price }}zł</th>
+							<th>{{ $shoptool->name }}</th>
+							<th>{{ $shoptool->quantity }}</th>
+							<th>
+								<form action="{{ route('panel.shopping.buy',  $shoptool) }}" method="POST">@method('PUT') @csrf
+								<input type="number" name="quantity" placeholder="Podaj ilość"><button type="submit">Zakup!</button>
+								</form>
+							</th>
+							@endforeach
+						</tr>
+					</tbody>
+				</table>
+                </div>
             </div>
         </div>
     </div>

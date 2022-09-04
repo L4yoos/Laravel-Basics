@@ -82,8 +82,8 @@ class RegisterController extends Controller
 
     private function NewUserWasRegistered( User $user ) :void   //void znaczy, że nie zwrócisz nic czyli nie będzie żadnego return
     {
-        // $user->is_admin = 1;
-        // $user->save();
+        $user->is_admin = 0;
+        $user->save();
         event( new UserWasRegistered( $user ) );
     }
 }

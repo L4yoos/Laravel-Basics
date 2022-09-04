@@ -4,27 +4,34 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.css">
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
-                <form action=" {{ route('panel.user.update', $user) }} " method="POST">@method('put')
-                @csrf
-					<p>Twój stan konta: <input type="text" value="{{ $user->wallet->balance }}" name="balance"></p>
-                    <p>ID: <input type="text" value="{{ $user->id }}" placeholder="ID" disabled></p>
-                    <p>Name: <input type="text" value="{{ $user->name }}" placeholder="Name" name="name"></p>
-                    <p>Password: <input type="text" value="" placeholder="password" name="password"></p>
-                    <p>Password confirmed: <input type="text" value="" placeholder="password_confirmation" name="password_confirmation"></p>
-                    <p>Email: <input type="text" value="" placeholder="Email" name="email"></p>
-                    <p>Email_verified: <input type="text" value="{{ $user->email_verified_at }}" placeholder="Email_ver" disabled></p>
-                    <p>Last_active: <input type="text" value="{{ $user->last_active }}" placeholder="last_active" disabled></p>
-                    <p>Phone: <input type="text" value="{{ $user->phone }}" placeholder="phone" name="phone"></p>
-					<p>Newsletter:  
-						<input type="checkbox" 
-								value="1" 
-								name="consent" 
-								@if($user->newsletter->consent == 1) checked ? 0 @endif
-						></p> 
-                    <button type="submit">Edytuj!</button>
-                </form> 
+                <div class="card-header">{{ __('Shopping Administration') }}</div>
+				<table>
+					<thead>
+						<tr>
+							<th>Cena:</th>
+							<th>Nazwa:</th>
+                            <th>Ilość:</th>
+							<th>Opcje:</th>
+						</tr>
+					</thead>
+					<tbody>
+                        <?php $i = 0; ?>
+						@foreach($shoptools as $shoptool)
+                        <form action="{{ route('panel.shopping.admin.add', $shoptool) }}" method="POST">@method('PUT') @csrf
+						<tr>
+                                <th><input type="number" value="{{ $shoptool->price }}" name="price{{$i}}"></th>
+                                <th><input type="text" value="{{ $shoptool->name }}" name="name{{$i}}"></th>
+                                <th><input type="number" value="{{ $shoptool->quantity }}" name="quantity{{$i}}"></th>
+                                <th><button type="submit">Zmien!</button></th>
+								</form>
+                            <?php $i++ ?>
+							@endforeach
+						</tr>
+					</tbody>
+				</table>
+                </div>
             </div>
         </div>
     </div>

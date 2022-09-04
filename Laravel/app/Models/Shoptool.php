@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Note extends Model
+class Shoptool extends Model
 {
     use HasFactory;
 
@@ -15,8 +15,6 @@ class Note extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
-        'topic',
-        'text'
+        'quantity'
     ];
 }

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Newsletter;
+use App\Models\Wallet;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -47,6 +49,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function newsletter()
     {
         return $this->hasOne( Newsletter::class );
+    }
+
+    public function wallet()
+    {
+        return $this->hasOne( Wallet::class );
     }
 
     // public function sendEmailVerificationNotification()

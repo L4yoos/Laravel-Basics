@@ -7,19 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ThanksYou extends Notification
+class Newsletternotify extends Notification
 {
     use Queueable;
-    private $thanksyou;
 
+    public $topic, $text;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($thanksyou)
+    public function __construct( string $topic, string $text)
     {
-        $this->thanksyou = $thanksyou;
+        $this->topic = $topic;
+        $this->text = $text;
     }
 
     /**
@@ -42,9 +43,9 @@ class ThanksYou extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line($this->thanksyou['body'])
-                    ->action($this->thanksyou['text'], $this->thanksyou['url'])
-                    ->line($this->thanksyou['thankyou']);
+                    ->line($this->topic)
+                    ->line($this->text)
+                    ->line('Dziekujemy za uzywanie naszego Newslettera!');
     }
 
     /**

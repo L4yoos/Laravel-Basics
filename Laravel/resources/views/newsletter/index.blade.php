@@ -1,3 +1,24 @@
+@extends('layouts.app')
+
+@section('content')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.css">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">{{ __('Newsletter') }}</div>
+
+                <form action="{{ route('panel.newsletter.store') }}" method="POST">@method('put')
+                @csrf
+                    <input type="text" name="topic" placeholder="Temat Maila">
+                    <input type="text" name="text" placeholder="Treść Maila" size="50">
+                    <button type="submit">Wyslij Maila!</button>
+                </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
 <script>
 @if(Session::has('success'))
@@ -35,3 +56,4 @@
 	@endif
 @endisset
 </script>
+@endsection

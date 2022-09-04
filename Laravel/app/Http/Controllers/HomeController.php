@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Newsletter;
+use App\Models\Wallet;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+
 
 class HomeController extends Controller
 {
@@ -17,10 +20,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        // dd($users);
-        
+        $users = User::all();   
         return view("home", ["users"=>$users]);
+    }
+    public function test()
+    {
+        return view("index");
     }
     public function delete( User $user)
     {
@@ -33,6 +38,23 @@ class HomeController extends Controller
     }
     public function show( User $user)
     {
+
+        if(($user->newsletter == NULL ) && ($user->wallet == NULL)){
+            $newsletter = new Newsletter;
+            $newsletter->user_id = Auth::id();
+            $newsletter->consent = 0;
+            $newsletter->timestamps = Carbon::now();
+            $newsletter->save();
+
+            $wallet = new Wallet;
+            $wallet->user_id = Auth::id();
+            $wallet->balance = 0;
+            $wallet->timestamps = Carbon::now();
+            $wallet->save();
+
+            return back()->with('success', 'Wejdz ponownie aby zobaczyć swoje dane!');
+        }
+
        return view('show', ["user"=>$user,]);
     }
     public function update( User $user, Request $request )
@@ -53,23 +75,17 @@ class HomeController extends Controller
             {
                 $user->email = $request->email;
             }
-    
+
             $user->name = $request->name;
-            
-            
-            $user->is_admin = $request->is_admin;
+             
             $user->phone = $request->phone;
             
             $user->save();
 
-            $newsletter = New Newsletter;
-            $newsletter->user_id = Auth::id();
+            $newsletter = $user->newsletter;
             $newsletter->consent = $request->consent ?? 0;
+            $newsletter->updated_at = Carbon::now();
             $newsletter->save();               
-
-            // $newsletter->user_id = Auth::id();         //to powinno iść przez Auth::id(), bo jak user wprowadzi takie cos a dobra tu nie masz
-            // $newsletter->consent = ;
-            // $newsletter->save();
     
             return back()->with(
     
